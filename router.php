@@ -18,7 +18,6 @@ switch($params[0]){
         show_home();
         break;
 
-    
     case "movies":
 
         require("pages/movies.php");
@@ -44,7 +43,7 @@ switch($params[0]){
         break;
 
     default:
-        //show_error_notfound();
+        require("pages/errors.php");
         break;
 
 }

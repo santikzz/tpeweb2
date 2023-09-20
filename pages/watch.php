@@ -17,7 +17,7 @@ function show_watch_movie($movie_id){
     <title><?php echo SITE_NAME; ?></title>
     <base href="<?php echo BASE_URL; ?>">
     <link rel="icon" type="image/png" href="images/icon.png">
-    <link rel='stylesheet' type='text/css' media='screen' href='styles.css'>
+    <link rel='stylesheet' type='text/css' media='screen' href='css/styles.css'>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script type="text/javascript" src="scripts.js"></script>

@@ -21,15 +21,77 @@ function show_nav(){
             </li>
         </ul>
         <ul class="links">
-            <li class="link"><a href="/home">LOGIN <i class="fa-solid fa-arrow-right-to-bracket"></i></a></li>
+            <li class="link"><a id="login-btn">LOGIN <i class="fa-solid fa-arrow-right-to-bracket"></i></a></li>
         </ul>
     </div>
+
+    <div class="login-container" id="login-nav">
+
+        <div class="login-form">
+
+
+            <img class="logo" src="images/logo.png">
+
+            <h2>Log In</h2>
+
+            <div class="input-group">
+                <span class="input-icon"><i class="fa-solid fa-user"></i></span>
+                <input class="input" type="text" name="username" placeholder="username or email">
+            </div>
+
+            <div class="input-group">
+                <span class="input-icon"><i class="fa-solid fa-lock"></i></span>
+                <input class="input" type="password" name="password" placeholder="password">
+            </div>
+
+            <div class="button-group">
+                <button type="submit" class="btn">Log In <i class="fa-solid fa-right-to-bracket"></i></button>
+            </div>
+
+            <div class="options">
+                <a class="link" href="#">Register</a>
+                <a class="link" href="#">Forgot your password?</a>
+            </div>
+
+
+        </div>
+
+    </div>
+
 </nav>
 
 <script>
-    document.querySelector("#dropdown-toggle").addEventListener("click", function(){
-        document.querySelector("#dropdown-menu").classList.toggle("hidden");
+
+    // --- toggle the genres dropdown --- //
+    const dropdownMenu = document.querySelector("#dropdown-menu");
+    const dropdownBtn = document.querySelector("#dropdown-toggle");
+    // open the dropdown when click on "genres"
+    dropdownBtn.addEventListener("click", function(event){
+        dropdownMenu.classList.toggle("hidden");
+        event.stopPropagation();
     });
+    // close the dropdown when click outside 
+    document.addEventListener("click", function(event){
+        if(!dropdownMenu.contains(event.target)){
+            dropdownMenu.classList.add("hidden");
+        }
+    });
+
+    // --- toggle the login sidenav --- //
+    const loginNav = document.querySelector("#login-nav");
+    const openLoginNav = document.querySelector("#login-btn");
+    // open the nav when click on "login"
+    openLoginNav.addEventListener("click", function(event){
+        loginNav.classList.add("active");
+        event.stopPropagation();
+    });
+    // click outside the login nav to close it
+    document.addEventListener("click", function(event){
+        if(!loginNav.contains(event.target) && !openLoginNav.contains(event.target)){
+            loginNav.classList.remove("active");
+        }
+    });
+
 </script>
 
 <?php } ?>
