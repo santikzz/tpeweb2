@@ -1,8 +1,14 @@
 <?php
 
-ini_set('display_errors', '1');
-ini_set('display_startup_errors', '1');
-error_reporting(E_ALL);
+// ini_set('display_errors', '1');
+// ini_set('display_startup_errors', '1');
+// error_reporting(E_ALL);
+
+define('BASE_URL', '//'.$_SERVER['SERVER_NAME'] . ':' .$_SERVER['SERVER_PORT'] . dirname($_SERVER['PHP_SELF']).'/');
+
+require_once "./app/controllers/movie.controller.php";
+require_once "./app/controllers/user.controller.php";
+require_once "./app/controllers/dashboard.controller.php";
 
 // get action & param
 $action = isset($_GET["action"])?$_GET["action"]:"home";
@@ -14,36 +20,44 @@ $params = explode("/", $action);
 switch($params[0]){
 
     case "home":
-        require("pages/home.php");
-        show_home();
+        $movieController = new MovieController();
+        $movieController->showHome();
         break;
 
     case "movies":
+        $movieController = new MovieController();
+        $movieController->showMovies( isset($params[1])?$params[1]:"" );
+        break;
 
-        require("pages/movies.php");
-
-        if( isset($params[1]) ){
-            show_movies($params[1]);
-        }else{
-            show_movies();
-        }   
-        
+    case "genres":
+        $movieController = new MovieController();
+        $movieController->showGenres();
         break;
 
     case "watch":
-        require("pages/watch.php");
-        // check if param is set, else default 0
         $id = isset($params[1])?$params[1]:0;
-        show_watch_movie($id);
+        $movieController = new MovieController();
+        $movieController->showPlayMovie($id);
         break;
 
     case "login":
-        require("pages/login.php");
-        show_login();
+        $userController = new UserController();
+        $userController->validate();
         break;
 
+    case "logout":
+        $userController = new UserController();
+        $userController->logout();
+        break;
+
+    case "dashboard":
+        $dashboardController = new DashboardController();
+        $dashboardController->showDashboard();
+        break;
+    
     default:
-        require("pages/errors.php");
+        // require("pages/errors.php");
+        
         break;
 
 }

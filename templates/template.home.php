@@ -1,27 +1,3 @@
-<?php
-
-require_once("includes/db.php");
-require_once("includes/config.php");
-require_once("pages/nav.php");
-
-function show_home(){ ?>
-
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset='utf-8'>
-    <title><?php echo SITE_NAME; ?></title>
-    <base href="<?php echo BASE_URL; ?>">
-    <link rel="icon" type="image/png" href="images/icon.png">
-    <link rel='stylesheet' type='text/css' media='screen' href='css/styles.css'>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script type="text/javascript" src="scripts.js"></script>
-</head>
-<body>
-
-<?php show_nav(); ?>
-
 <div class="background">
     <img class="overlay" src="images/overlay.png">
     <div id="banner-div">
@@ -67,31 +43,4 @@ function show_home(){ ?>
 
 </div>
 
-
-<footer>
-</footer>
-
-</body>
-
-<script type="text/javascript">
-
-    var banner_images = document.querySelectorAll("#banner-image");
-
-    var i = 0;
-    const interval = setInterval(function() {
-        
-        banner_images[i % 4].classList.toggle("hidden");
-        i++; 
-        banner_images[i % 4].classList.toggle("hidden");
-
-    }, 5000);
-
-
-
-</script>
-
-</html>
-
-
-
-<?php } ?>
+<script type="text/javascript" src="/js/home.js"></script>
