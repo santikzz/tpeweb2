@@ -37,8 +37,15 @@ class MovieModel{
     }
 
     public function getMovie($id){
-        $stmt = $this->db->prepare("SELECT id, nombre, autor, image FROM pelicula WHERE id = ?");
-        $stmt->execute(array($id));
+        $stmt = $this->db->prepare("SELECT id, nombre, autor, id_genero, image FROM pelicula WHERE id = :id");
+        $stmt->execute(["id" => $id]);
+        $result = $stmt->fetch(PDO::FETCH_OBJ);
+        return $result;
+    }
+
+    public function getGenre($id){
+        $stmt = $this->db->prepare("SELECT id, nombre FROM genero WHERE id = :id");
+        $stmt->execute(["id" => $id]);
         $result = $stmt->fetch(PDO::FETCH_OBJ);
         return $result;
     }
@@ -49,6 +56,36 @@ class MovieModel{
         $result = $stmt->fetchAll(PDO::FETCH_OBJ);
         return $result;
     }
+
+    public function addMovie($title, $genre_id, $author, $image){
+        $stmt = $this->db->prepare("INSERT INTO `pelicula` (`nombre`, `id_genero`, `autor`, `image` ) VALUES (:nombre, :id_genero, :autor, :imageurl)");
+        $stmt->execute(["nombre" => $title, "id_genero" => $genre_id, "autor" => $author, "imageurl" => $image]);
+    }
+
+    public function addGenre($nombre){
+        $stmt = $this->db->prepare("INSERT INTO `genero` (`nombre`) VALUES (:nombre)");
+        $stmt->execute(["nombre" => $nombre]);
+    }
+    
+    public function deleteGenre($id){
+        $stmt = $this->db->prepare("DELETE FROM `genero` WHERE `id` = :id");
+        $stmt->execute(["id" => $id]);
+    }
+    public function deleteMovie($id){
+        $stmt = $this->db->prepare("DELETE FROM `pelicula` WHERE `id` = :id");
+        $stmt->execute(["id" => $id]);
+    }
+
+    public function updateMovie($title, $genre_id, $author, $image, $id){
+        $stmt = $this->db->prepare("UPDATE `pelicula` SET `nombre` = :nombre, `id_genero` = :id_genero, `autor` = :autor, `image` = :imageurl WHERE `id` = :id ");
+        $stmt->execute(["nombre" => $title, "id_genero" => $genre_id, "autor" => $author, "imageurl" => $image, "id" => $id]);
+    }
+
+    public function updateGenre($nombre, $id){
+        $stmt = $this->db->prepare("UPDATE `genero` SET `nombre` = :nombre WHERE `id` = :id");
+        $stmt->execute(["nombre" => $nombre, "id" => $id]);
+    }
+
     
 
 }

@@ -1,50 +1,56 @@
 <?php
 
-
+require_once("smarty-4.3.4/libs/Smarty.class.php");
 class DashboardView {
 
-    public function showDashboard($movies){
-        require_once "./templates/template.dashboard_header.php"; ?>
+    private $smarty;
+    private $auth;
+
+    public function __construct(){
+        $this->auth = new AuthHelper();
         
-        <div class="container-fluid p-4">
-
-        <table class="table">
-            <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Name</th>
-                <th scope="col">Genre</th>
-                <th scope="col">Author</th>
-                <th scope="col">Image</th>
-                <th scope="col">Action</th>
-            </tr>
-            </thead>
-            <tbody>
-            
-            <?php
-                if($movies){
-                    foreach($movies as $movie){ ?>
-                        <tr>
-                            <th scope="row"><?php echo $movie->id; ?></th>
-                            <td><?php echo $movie->nombre; ?></td>
-                            <td><?php echo $movie->genero; ?></td>
-                            <td><?php echo $movie->autor; ?></td>
-                            <td><?php echo $movie->image; ?></td>
-                            <td>
-                                <a href="/dashboard/edit/<?php echo $movie->id; ?>" type="button" class="btn btn-primary">Edit</a>
-                                <a href="/dashboard/delete/<?php echo $movie->id; ?>" type="button" class="btn btn-danger">Delete</a>
-                            </td>
-                        </tr>
-                <?php } } ?>
-
-            
-            </tbody>
-        </table>
-
-        </div>
-
-        <?php require_once "./templates/template.dashboard_footer.php";
+        if (!$this->auth->checkLoggedIn() && !$this->auth->checkIsAdmin()){
+            header("Location: ".BASE_URL);
+            die();
+        }
+        
+        $this->smarty = new Smarty();
+        
+        $this->smarty->assign("basehref", BASE_URL);
+        $this->smarty->assign('isLogged', $this->auth->checkLoggedIn());
+        $this->smarty->assign('isAdmin', $this->auth->checkIsAdmin());
+        $this->smarty->assign('username', $this->auth->getUsername());
+    }
+    public function showHome($movies, $genres, $error = null){
+        $this->smarty->assign("title", 'Uniflix - Admin Dashboard');
+        $this->smarty->assign('error', $error);
+        $this->smarty->assign('movies', $movies);
+        $this->smarty->assign('genres', $genres);
+        $this->smarty->display("templates/template.dashboard_home.tpl");
     }
 
-
+    public function showAddNew($genres, $error = null){
+        $this->smarty->assign("title", 'Uniflix - Admin Dashboard');
+        $this->smarty->assign('error', $error);
+        $this->smarty->assign('genres', $genres);
+        $this->smarty->display("templates/template.dashboard_addNew.tpl");
     }
+
+    public function showEditGenre($genre, $error = null){
+        $this->smarty->assign("title", 'Uniflix - Admin Dashboard');
+        $this->smarty->assign('error', $error);
+        $this->smarty->assign('genre', $genre);
+        $this->smarty->display("templates/template.dashboard_editGenre.tpl");
+    }
+
+    public function showEditMovie($movie, $genres, $error = null){
+        $this->smarty->assign("title", 'Uniflix - Admin Dashboard');
+        $this->smarty->assign('error', $error);
+        $this->smarty->assign('movie', $movie);
+        $this->smarty->assign('genres', $genres);
+        $this->smarty->display("templates/template.dashboard_editMovie.tpl");
+    }
+
+    
+
+}

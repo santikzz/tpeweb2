@@ -1,8 +1,0 @@
-primero descargas el repositorio
-> git clone https://github.com/santikzz/tpeweb2
-
-ya te voy a haber agregado como colaborador asi que una vez que hayas editado o creado un archivo haces:
-
-> git add .                 // para agregar TODOS los archivos que cambiaste o creaste dentro de la carpeta
-> git commit -M "mensaje"	// para commitear los cambios, podes poner el mensaje que quieras
-> git push -u origin main	// para subir los archivos al repositorio (seguramente te tengas que logear en github)

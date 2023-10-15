@@ -2,6 +2,7 @@
 
 require_once "./app/models/movie.model.php";
 require_once "./app/views/movie.view.php";
+require_once "./app/helpers/auth.helper.php";
 
 class MovieController{
 
@@ -14,20 +15,17 @@ class MovieController{
     }
 
     public function showHome(){
-        $movies = $this->model->getTrendingMovies();
-        $this->view->showHome($movies);
+        // $movies = $this->model->getTrendingMovies();
+        $this->view->showHome();
     }
 
     public function showMovies($genre){
-        
         $genre = filter_var($genre, FILTER_SANITIZE_STRING);
-
         if(empty($genre)){
             $movies = $this->model->getAllMovies();
         }else{
             $movies = $this->model->getAllMoviesByGenre($genre);
-        }
-            
+        }    
         $this->view->showMovies($movies, $genre);
     }
 
